@@ -1,0 +1,19 @@
+apply from: 'version.gradle'
+
+subprojects {
+    group = 'com.demo'
+    version = gitVersion
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    processResources {
+        with copySpec {
+            from 'src/main/resources'
+            include '**/version.properties'
+            filter {
+                it.replace('@version@', project.property('version'))
+            }
+        }
+    }
+
+}

@@ -1,0 +1,4 @@
+rootProject.name = 'multi-demo'
+
+include 'demo1'
+include 'demo2'
