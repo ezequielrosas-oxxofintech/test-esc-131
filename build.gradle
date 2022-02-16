@@ -1,13 +1,15 @@
-plugins {
-    id 'org.springframework.boot' version '2.6.3'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'groovy'
+// Use legacy plugin application style (since that's compatible with subprojects {})
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.6.3"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+    }
 }
 
-repositories {
-    mavenCentral()
-}
-
+apply plugin: 'io.spring.dependency-management'
 apply from: 'version.gradle'
 
 subprojects {
