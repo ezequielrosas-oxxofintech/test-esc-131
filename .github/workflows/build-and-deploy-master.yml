@@ -1,0 +1,30 @@
+name: Build and Deploy to EKS
+
+on:
+  push:
+    branches:
+      - master
+      - qa
+      - staging
+      - prod
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: 🐘 Build Repository With Gradle
+        id: gradle_build
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: build --parallel
+          gradle-version: 6.8.3
+      - name: 🏗️ Build, Tag, and Push Images to Amazon ECR
+        env:
+          SERVICE_VERSION: ${{ steps.gradle_build.outputs.SERVICE_VERSION }}
+        run: |
+          docker login -u ${{ secrets.DOCKERUSER }}${{ secrets.DOCKERTOKEN }}
+          docker-compose build --no-cache --parallel
+          docker-compose push
