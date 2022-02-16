@@ -1,0 +1,26 @@
+# This docker-compose file is intended for LOCAL development only
+version: "3.4"
+
+services:
+  demo1:
+    build:
+      context: ./demo1
+      args:
+        SERVICE_NAME: demo1
+        SERVICE_VERSION: ${SERVICE_VERSION:?}
+    image: ezequielrosasoxxofintech/test-esc-131:demo1-${SERVICE_VERSION}
+    container_name: demo1
+    restart: "no"
+    ports:
+      - "8081:8080"
+  demo2:
+    build:
+      context: ./demo2
+      args:
+        SERVICE_NAME: demo2
+        SERVICE_VERSION: ${SERVICE_VERSION:?}
+    image: ezequielrosasoxxofintech/test-esc-131:demo2-${SERVICE_VERSION}
+    container_name: demo1
+    restart: "no"
+    ports:
+      - "8080:8080"
